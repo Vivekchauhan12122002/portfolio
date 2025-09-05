@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vivek Chauhan | Portfolio</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;scroll-behavior:smooth;}
+    body{display:flex;background:#0e0e0e;color:#f1f1f1;transition:0.3s ease;position:relative;overflow-x:hidden;}
+
+    /* Star background */
+    body::before{
+      content:"";
+      position:fixed;
+      top:0;left:0;
+      width:100%;height:100%;
+      background:url("https://www.transparenttextures.com/patterns/stardust.png") repeat;
+      opacity:0.2;
+      animation: moveStars 100s linear infinite;
+      z-index:-1;
+    }
+    @keyframes moveStars{from{background-position:0 0;}to{background-position:10000px 10000px;}}
+
+    /* Sidebar */
+    .sidebar{width:220px;min-height:100vh;background:#1a1a1a;padding:30px 20px;position:fixed;top:0;left:0;box-shadow:2px 0 15px rgba(0,0,0,0.5);}
+    .logo{font-family:'Great Vibes',cursive;font-size:2.2rem;font-weight:500;margin-bottom:50px;color:#e74c3c;}
+    .nav-links{list-style:none;}
+    .nav-links li{margin:25px 0;}
+    .nav-links a{color:#f1f1f1;text-decoration:none;font-weight:500;display:flex;align-items:center;gap:10px;transition:.3s;}
+    .nav-links a:hover{color:#e74c3c;transform:translateX(5px);}
+
+    /* Top Navbar */
+    .top-nav{position:fixed;top:0;left:220px;width:calc(100% - 220px);background:#111;display:flex;justify-content:center;gap:30px;padding:15px 0;z-index:100;}
+    .top-nav a{color:#f1f1f1;text-decoration:none;font-weight:500;transition:.3s;}
+    .top-nav a:hover{color:#e74c3c;}
+
+    /* Main content */
+    .main{margin-left:220px;width:100%;}
+    section{padding:80px 40px;min-height:auto;}
+    h2{font-size:2rem;margin-bottom:30px;color:#e74c3c;text-align:center;}
+
+    /* Hero */
+    .hero{display:flex;align-items:center;justify-content:space-between;gap:40px;flex-wrap:wrap;}
+    .hero-text{max-width:550px;}
+    .hero-text h1{font-size:2.5rem;margin-bottom:15px;}
+    .hero-text h1 span{color:#e74c3c;}
+    .typing{font-size:1.3rem;font-weight:600;color:#e74c3c;min-height:40px;}
+    .hero-text p{margin:20px 0;color:#ccc;}
+    .buttons{display:flex;gap:15px;margin-top:20px;flex-wrap:wrap;}
+    .btn{padding:12px 25px;border:none;border-radius:25px;background:#e74c3c;color:#fff;font-weight:500;cursor:pointer;transition:.3s;text-decoration:none;display:inline-block;}
+    .btn:hover{background:#c0392b;transform:scale(1.05);}
+    .hero-img img{width:280px;height:320px;object-fit:cover;border-radius:12px;box-shadow:0 4px 15px rgba(0,0,0,0.5);}
+
+    /* About */
+    .about{display:flex;gap:40px;flex-wrap:wrap;align-items:center;}
+    .about img{width:260px;height:300px;object-fit:cover;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.4);}
+    .about-text{flex:1;}
+    .about-text p{line-height:1.7;color:#ccc;}
+
+    /* Section block layout */
+    .section-blocks{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+      gap:25px;
+      margin-top:30px;
+    }
+    .block-card{
+      background:#1a1a1a;
+      padding:25px;
+      border-radius:12px;
+      box-shadow:0 4px 12px rgba(0,0,0,0.4);
+      transition:transform 0.3s ease, background 0.3s ease;
+    }
+    .block-card:hover{
+      transform:translateY(-5px);
+      background:#222;
+    }
+    .block-card h3{margin-bottom:12px;color:#e74c3c;}
+    .block-card p{color:#ccc;line-height:1.6;}
+
+    /* Contact */
+    .contact-form{max-width:500px;margin:auto;display:flex;flex-direction:column;gap:15px;}
+    .contact-form input,.contact-form textarea{padding:12px;border:1px solid #333;border-radius:8px;font-size:1rem;background:#111;color:#f1f1f1;}
+    .contact-form button{background:#e74c3c;color:#fff;padding:12px;border:none;border-radius:25px;cursor:pointer;transition:.3s;}
+    .contact-form button:hover{background:#c0392b;}
+    .social{margin-top:20px;text-align:center;}
+    .social a{margin:0 10px;font-size:1.4rem;color:#e74c3c;text-decoration:none;}
+
+    /* Modal (Hire Me Form) */
+    .modal-backdrop{
+      position:fixed;inset:0;
+      background:rgba(0,0,0,0.6);
+      display:none;align-items:center;justify-content:center;
+      z-index:200;
+      padding:20px;
+    }
+    .modal{
+      width:100%;max-width:520px;background:#121212;border:1px solid #2a2a2a;
+      border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,0.6);
+      overflow:hidden;
+      transform:translateY(20px);opacity:0;transition:.25s ease;
+    }
+    .modal.show{transform:translateY(0);opacity:1;}
+    .modal-header{
+      padding:16px 20px;background:#1b1b1b;border-bottom:1px solid #2a2a2a;
+      display:flex;align-items:center;justify-content:space-between;
+    }
+    .modal-header h3{color:#e74c3c;font-size:1.25rem;}
+    .close-btn{
+      background:transparent;border:none;color:#bbb;font-size:1.4rem;cursor:pointer;line-height:1;
+    }
+    .modal-body{padding:20px;display:flex;flex-direction:column;gap:14px;}
+    .modal-body .row{display:flex;gap:12px;flex-wrap:wrap;}
+    .modal-body .row .field{flex:1;min-width:200px;}
+    .field label{font-size:.9rem;color:#aaa;display:block;margin-bottom:6px;}
+    .field input,.field textarea,.field select{
+      width:100%;padding:12px;border:1px solid #2f2f2f;border-radius:10px;background:#0f0f0f;color:#f1f1f1;
+      outline:none;
+    }
+    .modal-footer{padding:16px 20px;border-top:1px solid #2a2a2a;display:flex;justify-content:flex-end;gap:10px;background:#151515;}
+    .btn-secondary{background:#333;}
+    .btn-secondary:hover{background:#3e3e3e;}
+
+    /* Responsive */
+    @media(max-width:900px){
+      .sidebar{display:none;}
+      .top-nav{left:0;width:100%;}
+      .main{margin-left:0;}
+    }
+    @media(max-width:600px){
+      .hero{flex-direction:column;text-align:center;}
+      .hero-img img{width:220px;height:260px;}
+      .hero-text h1{font-size:2rem;}
+      .typing{font-size:1.1rem;}
+      .about{flex-direction:column;text-align:center;}
+      .about img{width:200px;height:240px;}
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="logo">Vivek Chauhan<span>.</span></div>
+    <ul class="nav-links">
+      <li><a href="#home">🏠 Home</a></li>
+      <li><a href="#about">👤 About</a></li>
+      <li><a href="#skills">💡 Skills</a></li>
+      <li><a href="#projects">📂 Projects</a></li>
+      <li><a href="#education">🎓 Education</a></li>
+      <li><a href="#contact">✉️ Contact</a></li>
+    </ul>
+  </div>
+
+  <!-- Top Navbar -->
+  <div class="top-nav">
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#education">Education</a>
+    <a href="#contact">Contact</a>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main">
+    <!-- Home Section -->
+    <section id="home" class="hero">
+      <div class="hero-text">
+        <h1>Hello, my name is <span>Vivek Chauhan</span></h1>
+        <div class="typing" id="typing"></div>
+        <p>I am a passionate Full Stack Developer with strong fundamentals in networking, web development, and troubleshooting. With hands-on project experience, I aim to build scalable and innovative solutions.</p>
+        <div class="buttons">
+          <button class="btn" id="hireMeBtn">Hire Me</button>
+          <a href="https://drive.google.com/uc?export=download&id=14X6bwqtAMT42KZa5w8ngWQ5q_sa2pexh" class="btn" download>Download CV</a>
+        </div>
+      </div>
+      <div class="hero-img">
+        <img src="image/prophile.jpg" alt="Vivek Chauhan">
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+      <h2>About Me</h2>
+      <div class="about">
+        <img src="image/prophile.jpg" alt="About Vivek">
+        <div class="about-text">
+          <p>I am Vivek Chauhan, a Computer Science student and aspiring Full Stack Developer. I enjoy creating professional and scalable web applications. With skills in modern web technologies, databases, and a growing interest in DevOps, I aim to integrate automation, cloud, and AI tools into real-world solutions.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+      <h2>My Skills</h2>
+      <div class="section-blocks">
+        <div class="block-card"><h3>Python</h3><p>Strong knowledge in scripting & automation.</p></div>
+        <div class="block-card"><h3>C++</h3><p>Problem-solving & data structures.</p></div>
+        <div class="block-card"><h3>JavaScript</h3><p>Frontend & interactive web features.</p></div>
+        <div class="block-card"><h3>HTML & CSS</h3><p>Responsive, modern UI design.</p></div>
+        <div class="block-card"><h3>React.js</h3><p>Basic knowledge of building components.</p></div>
+        <div class="block-card"><h3>Node.js</h3><p>Server-side programming basics.</p></div>
+        <div class="block-card"><h3>Databases</h3><p>Experience in MySQL, MongoDB, Firebase.</p></div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+      <h2>Projects</h2>
+      <div class="section-blocks">
+        <div class="block-card"><h3>📘 eBook Bazaar</h3><p>Online book store with browsing, buying, and donation features. Built using HTML, CSS, JS, and Firebase.</p></div>
+        <div class="block-card"><h3>🏫 School Website</h3><p>Responsive site with events, gallery, notices, and contact form. Built using HTML, CSS, JS.</p></div>
+        <div class="block-card"><h3>🤖 AI Tool Integration</h3><p>Integrated AI-powered tools via APIs for education/productivity. Built using HTML, CSS, JS, APIs.</p></div>
+      </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education">
+      <h2>Education</h2>
+      <div class="section-blocks">
+        <div class="block-card"><h3>Diploma in Computer Science</h3><p>DSEU Rajokari Campus (2022–2025), CGPA: 6.5</p></div>
+        <div class="block-card"><h3>Class 12</h3><p>Purvanchal IC Chandrapar, Mau (2021) – 64.5%</p></div>
+        <div class="block-card"><h3>Class 10</h3><p>Madhav Parvati UMV, Mau (2020) – 74.5%</p></div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+      <h2>Contact Me</h2>
+      <form class="contact-form" id="contactSectionForm">
+        <input id="contactName" type="text" placeholder="Your Name" required>
+        <input id="contactEmail" type="email" placeholder="Your Email" required>
+        <textarea id="contactMessage" rows="5" placeholder="Your Message" required></textarea>
+        <button type="submit">Send via WhatsApp</button>
+      </form>
+      <div class="social">
+        <a href="mailto:vivekc121205@gmail.com">📧 Email</a>
+        <a href="https://github.com/vivekchauhan275302">💻 GitHub</a>
+        <a href="https://shorturl.at/Z4805">🔗 LinkedIn</a>
+      </div>
+    </section>
+  </div>
+
+  <!-- HIRE ME MODAL -->
+  <div class="modal-backdrop" id="hireModalBackdrop" aria-hidden="true">
+    <div class="modal" id="hireModal" role="dialog" aria-modal="true" aria-labelledby="hireModalTitle">
+      <div class="modal-header">
+        <h3 id="hireModalTitle">Hire Me</h3>
+        <button class="close-btn" id="closeHireModal" aria-label="Close">✕</button>
+      </div>
+      <form id="hireForm">
+        <div class="modal-body">
+          <div class="row">
+            <div class="field">
+              <label for="clientName">Your Name</label>
+              <input id="clientName" name="clientName" type="text" placeholder="e.g. Rohit Sharma" required />
+            </div>
+            <div class="field">
+              <label for="clientEmail">Email</label>
+              <input id="clientEmail" name="clientEmail" type="email" placeholder="you@example.com" required />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field">
+              <label for="clientPhone">Phone (optional)</label>
+              <input id="clientPhone" name="clientPhone" type="tel" placeholder="+91 98xxxxxxx" />
+            </div>
+            <div class="field">
+              <label for="projectType">Project Type</label>
+              <select id="projectType" name="projectType" required>
+                <option value="">Select a service</option>
+                <option>Website Development</option>
+                <option>Full Stack App</option>
+                <option>Landing Page</option>
+                <option>API Integration</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field">
+              <label for="budget">Budget (optional)</label>
+              <input id="budget" name="budget" type="text" placeholder="e.g. ₹20,000 - ₹50,000" />
+            </div>
+            <div class="field">
+              <label for="timeline">Timeline (optional)</label>
+              <input id="timeline" name="timeline" type="text" placeholder="e.g. 2–4 weeks" />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="projectDetails">Project Details</label>
+            <textarea id="projectDetails" name="projectDetails" rows="4" placeholder="Briefly describe your project..." required></textarea>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="cancelHireForm">Cancel</button>
+          <button type="submit" class="btn">Send via WhatsApp</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- JS Typing + Modal + WhatsApp Integration -->
+  <script>
+    const WHATSAPP_NUMBER = "919569645787";
+
+    /* Typing Animation */
+    const typingElement = document.getElementById("typing");
+    const typingTexts = ["Full Stack Developer", "Web Designer", "Tech Enthusiast"];
+    let textIndex = 0, charIndex = 0;
+    function type(){
+      if(charIndex < typingTexts[textIndex].length){
+        typingElement.textContent += typingTexts[textIndex].charAt(charIndex);
+        charIndex++; setTimeout(type,100);
+      } else {
+        setTimeout(erase,1500);
+      }
+    }
+    function erase(){
+      if(charIndex>0){
+        typingElement.textContent = typingTexts[textIndex].substring(0,charIndex-1);
+        charIndex--; setTimeout(erase,50);
+      } else {
+        textIndex=(textIndex+1)%typingTexts.length;
+        setTimeout(type,200);
+      }
+    }
+    document.addEventListener("DOMContentLoaded",()=>setTimeout(type,500));
+
+    /* Hire Me Modal */
+    const hireBtn=document.getElementById("hireMeBtn");
+    const hireModalBackdrop=document.getElementById("hireModalBackdrop");
+    const closeHireModal=document.getElementById("closeHireModal");
+    const cancelHireForm=document.getElementById("cancelHireForm");
+
+    hireBtn.addEventListener("click",()=>{hireModalBackdrop.style.display="flex";setTimeout(()=>document.getElementById("hireModal").classList.add("show"),10);});
+    closeHireModal.addEventListener("click",()=>{document.getElementById("hireModal").classList.remove("show");setTimeout(()=>hireModalBackdrop.style.display="none",200);});
+    cancelHireForm.addEventListener("click",()=>{document.getElementById("hireModal").classList.remove("show");setTimeout(()=>hireModalBackdrop.style.display="none",200);});
+    hireModalBackdrop.addEventListener("click",(e)=>{if(e.target===hireModalBackdrop){document.getElementById("hireModal").classList.remove("show");setTimeout(()=>hireModalBackdrop.style.display="none",200);}});
+
+    /* Hire Form WhatsApp */
+    document.getElementById("hireForm").addEventListener("submit",function(e){
+      e.preventDefault();
+      const name=document.getElementById("clientName").value.trim();
+      const email=document.getElementById("clientEmail").value.trim();
+      const phone=document.getElementById("clientPhone").value.trim();
+      const projectType=document.getElementById("projectType").value;
+      const budget=document.getElementById("budget").value.trim();
+      const timeline=document.getElementById("timeline").value.trim();
+      const details=document.getElementById("projectDetails").value.trim();
+
+      if(!name||!email||!projectType||!details){alert("Please fill in all required fields.");return;}
+      const text=`*Hire Request*\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nProject: ${projectType}\nBudget: ${budget}\nTimeline: ${timeline}\n\nDetails:\n${details}`;
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`,"_blank");
+      this.reset();
+      closeHireModal.click();
+    });
+
+    /* Contact Form WhatsApp */
+    const contactForm=document.getElementById("contactSectionForm");
+    if(contactForm){
+      contactForm.addEventListener("submit",function(e){
+        e.preventDefault();
+        const name=document.getElementById("contactName").value.trim();
+        const email=document.getElementById("contactEmail").value.trim();
+        const message=document.getElementById("contactMessage").value.trim();
+        if(!name||!email||!message){alert("Please fill all fields.");return;}
+        const text=`*New Contact Message*\nName: ${name}\nEmail: ${email}\n\nMessage:\n${message}`;
+        window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`,"_blank");
+        contactForm.reset();
+      });
+    }
+  </script>
+</body>
+</html>
